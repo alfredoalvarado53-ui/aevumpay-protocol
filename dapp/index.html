@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AevumPay Protocol | QDay Aevum Testnet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#1e1b4b',
+            },
+            qday: '#00F0FF',
+            aevum: '#7928CA'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-border {
+      background: linear-gradient(135deg, #00F0FF, #7928CA);
+      padding: 1px;
+      border-radius: 1rem;
+    }
+    .stream-ticker {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-cyan-500 selection:text-black">
+  <!-- Top Banner -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+          <i class="fa-solid fa-shield-halved text-lg"></i>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">AevumPay</span>
+          <span class="ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800">QDay Testnet</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="addNetworkBtn" class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+          <i class="fa-solid fa-network-wired text-cyan-400"></i>
+          <span>Add QDay (44005)</span>
+        </button>
+
+        <div id="balanceBadge" class="hidden items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+          <span id="qdayBal">0 tQDAY</span> | <span id="usd8Bal" class="text-emerald-400 font-semibold">0 tUSD8</span>
+        </div>
+
+        <button id="connectWalletBtn" class="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold transition shadow-lg shadow-cyan-500/25">
+          <i class="fa-solid fa-wallet"></i>
+          <span id="walletBtnText">Connect Wallet</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900/60 to-slate-950 border border-slate-800 p-8 sm:p-10">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold">
+          <i class="fa-solid fa-bolt text-cyan-400"></i> Aevum Builder Challenge #1 Track Winner Engine
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white">
+          Autonomous Agent & Escrow Protocol with <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">Confirmation of Payee</span>
+        </h1>
+        <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+          Enterprise milestone escrows, continuous real-time streaming payroll, and session-bounded AI Agent micropayments powered by <strong>ERC-8004</strong> identity verification and <strong>tUSD8</strong> stablecoins on QDay Aevum Testnet.
+        </p>
+
+        <!-- Network Info Pill Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <div class="text-xs text-slate-500 font-medium">Chain ID</div>
+            <div class="text-sm font-bold text-cyan-400">44005 (0xABE5)</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <div class="text-xs text-slate-500 font-medium">Native Gas Token</div>
+            <div class="text-sm font-bold text-slate-200">tQDAY (18 Dec)</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <div class="text-xs text-slate-500 font-medium">Stablecoin Asset</div>
+            <div class="text-sm font-bold text-emerald-400">tUSD8 (6 Dec)</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <div class="text-xs text-slate-500 font-medium">Payee Security</div>
+            <div class="text-sm font-bold text-indigo-400">ERC-8004 Registry</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex border-b border-slate-800 gap-2 overflow-x-auto pb-px">
+      <button onclick="switchTab('cop')" id="tab-cop" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-cyan-400 text-cyan-400 flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-id-card"></i> 1. Confirmation of Payee (ERC-8004)
+      </button>
+      <button onclick="switchTab('escrow')" id="tab-escrow" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-file-invoice-dollar"></i> 2. Milestone & Invoice Escrow
+      </button>
+      <button onclick="switchTab('stream')" id="tab-stream" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-water"></i> 3. Streaming Payroll & Vesting
+      </button>
+      <button onclick="switchTab('agent')" id="tab-agent" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-robot"></i> 4. Autonomous AI Agent Vault
+      </button>
+    </div>
+
+    <!-- TAB 1: Confirmation of Payee (ERC-8004) -->
+    <section id="panel-cop" class="tab-panel space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Lookup Card -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-magnifying-glass text-cyan-400"></i> Verify Payee Identifier
+            </h2>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-md">ERC-8004 Registry</span>
+          </div>
+          <p class="text-xs text-slate-400">
+            Verify merchant or recipient authenticity before sending payments. Prevents address spoofing, man-in-the-middle attacks, and invoice fraud.
+          </p>
+          <div class="flex gap-2">
+            <input type="text" id="copSearchInput" placeholder="e.g. alice.qday or 0x45656..." class="flex-1 px-4 py-2.5 text-sm bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            <button onclick="lookupPayee()" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-xl text-sm transition">
+              Verify
+            </button>
+          </div>
+          <div id="copResult" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Register Card -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-address-card text-indigo-400"></i> Register Your Payee Identity
+          </h2>
+          <p class="text-xs text-slate-400">
+            Bind your organization or developer alias to your EVM address on the official QDay registry.
+          </p>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Canonical Identifier</label>
+              <input type="text" id="regIdentifier" placeholder="e.g. yourorg.qday" class="w-full px-4 py-2 text-sm bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Legal / Display Name</label>
+              <input type="text" id="regLegalName" placeholder="e.g. Acme Corporation LLC" class="w-full px-4 py-2 text-sm bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Metadata URI (IPFS / HTTPS)</label>
+              <input type="text" id="regMetadata" placeholder="ipfs://... or https://..." class="w-full px-4 py-2 text-sm bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-400 text-slate-200">
+            </div>
+            <button onclick="registerPayee()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm transition">
+              Submit CoP Registration
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Milestone & Invoice Escrow -->
+    <section id="panel-escrow" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Create Escrow Form -->
+        <div class="lg:col-span-1 p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-plus-circle text-cyan-400"></i> New Invoice Escrow
+          </h2>
+          <div class="space-y-3 text-sm">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Payee Address</label>
+              <input type="text" id="escrowPayee" placeholder="0x..." class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Amount (tUSD8)</label>
+              <input type="number" id="escrowAmount" value="500" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Lock Duration (Hours)</label>
+              <input type="number" id="escrowDuration" value="24" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <input type="checkbox" id="escrowRequireCop" checked class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+              <label for="escrowRequireCop" class="text-xs text-slate-300 font-medium">Enforce ERC-8004 CoP Verification</label>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Invoice / IPFS Reference</label>
+              <input type="text" id="escrowRef" value="INV-QDAY-101" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <button onclick="createEscrow()" class="w-full py-2.5 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold rounded-xl text-sm transition">
+              Deposit & Lock Escrow
+            </button>
+          </div>
+        </div>
+
+        <!-- Escrows List -->
+        <div class="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-list-check text-emerald-400"></i> Active Escrows
+            </h2>
+            <button onclick="renderEscrows()" class="text-xs text-cyan-400 hover:underline">
+              <i class="fa-solid fa-rotate-right"></i> Refresh
+            </button>
+          </div>
+          <div id="escrowList" class="space-y-3">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Streaming Payroll -->
+    <section id="panel-stream" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Create Stream Form -->
+        <div class="lg:col-span-1 p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-water text-cyan-400"></i> Open Salary Stream
+          </h2>
+          <div class="space-y-3 text-sm">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Recipient (Worker / Grantee)</label>
+              <input type="text" id="streamRecipient" placeholder="0x..." class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Total Allocation (tUSD8)</label>
+              <input type="number" id="streamDeposit" value="3600" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Duration (Seconds)</label>
+              <input type="number" id="streamDuration" value="3600" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Title / Designation</label>
+              <input type="text" id="streamTitle" value="Lead Protocol Developer" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <button onclick="createStream()" class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-bold rounded-xl text-sm transition">
+              Initialize Continuous Stream
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Stream Visualizer -->
+        <div class="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-emerald-400"></i> Live Vesting Streams
+          </h2>
+          <div id="streamList" class="space-y-4">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Autonomous AI Agent Vault -->
+    <section id="panel-agent" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Configure Agent Session -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-key text-cyan-400"></i> Configure AI Agent Session Key
+          </h2>
+          <p class="text-xs text-slate-400">
+            Delegate spending authority to an autonomous LLM Agent with strict daily quotas, maximum per-transaction bounds, and Confirmation of Payee verification.
+          </p>
+          <div class="space-y-3 text-sm">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Agent Address / Session Key</label>
+              <input type="text" id="agentAddress" placeholder="0x..." class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Per-Tx Limit (tUSD8)</label>
+                <input type="number" id="agentPerTx" value="50" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">24h Daily Limit (tUSD8)</label>
+                <input type="number" id="agentDaily" value="200" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-cyan-400 text-slate-200">
+              </div>
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <input type="checkbox" id="agentRequireCop" checked class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+              <label for="agentRequireCop" class="text-xs text-slate-300 font-medium">Require ERC-8004 Verified Merchants</label>
+            </div>
+            <button onclick="configureAgent()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm transition">
+              Authorize Agent Session Policy
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulate Agent Micropayment -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-emerald-400"></i> Autonomous Execution Simulator
+          </h2>
+          <p class="text-xs text-slate-400">
+            Simulate an autonomous Agent purchasing cloud inference, paying RPC fees, or settling an API invoice on-chain.
+          </p>
+          <div class="space-y-3 text-sm">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Merchant / Recipient</label>
+              <input type="text" id="simMerchant" placeholder="0x... or identifier" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-emerald-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Payment Amount (tUSD8)</label>
+              <input type="number" id="simAmount" value="25" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-emerald-400 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Autonomous Purpose Tag</label>
+              <input type="text" id="simPurpose" value="Decentralized LLM Compute Batch #498" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl focus:outline-none focus:border-emerald-400 text-slate-200">
+            </div>
+            <button onclick="executeAgentSim()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition">
+              Trigger Autonomous Agent Execution
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Feed -->
+    <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+          <i class="fa-solid fa-wave-square text-cyan-400"></i> Live Activity & On-Chain Event Feed
+        </h3>
+        <span class="text-xs text-slate-500">Explorer: explorer-test.qday.info</span>
+      </div>
+      <div id="activityFeed" class="space-y-2 text-xs font-mono max-h-48 overflow-y-auto">
+        <div class="text-slate-500">[System] AevumPay protocol engine loaded. Connected to QDay Testnet (Chain ID 44005).</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 mt-12 py-6 text-center text-xs text-slate-500">
+    Built for <strong>Aevum Builder Challenge #1</strong> on QDay Aevum Testnet. Developed by <strong>alfredoalvarado53-ui</strong>.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

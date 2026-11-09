@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  aevumpay-dapp:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: aevumpay_protocol
+    ports:
+      - "8080:8080"
+    environment:
+      - QDAY_RPC_URL=https://rpc-test.qday.info
+      - CHAIN_ID=44005
+    restart: unless-stopped

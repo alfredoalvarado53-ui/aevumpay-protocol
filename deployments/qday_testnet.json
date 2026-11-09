@@ -1,0 +1,14 @@
+{
+  "network": "QDay Aevum Testnet",
+  "chainId": 44005,
+  "rpcUrl": "https://rpc-test.qday.info",
+  "explorerUrl": "https://explorer-test.qday.info/",
+  "contracts": {
+    "tUSD8": "0x456569838f1d43009A91ebA4263147Afd7233483",
+    "ERC8004Registry": "Pending Live Faucet Gas",
+    "AevumPayEscrow": "Pending Live Faucet Gas",
+    "AevumStreamPayroll": "Pending Live Faucet Gas",
+    "AevumAgentVault": "Pending Live Faucet Gas"
+  },
+  "status": "ready_for_broadcast"
+}
